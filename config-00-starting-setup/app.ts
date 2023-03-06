@@ -1,1 +1,3 @@
-console.log('Time to get started...');
+let userName = 'Alberto'
+console.log(userName)
+
