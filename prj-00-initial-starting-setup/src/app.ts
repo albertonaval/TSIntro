@@ -88,7 +88,7 @@ function validate(validatableInput: Validatable) {
         isValid = isValid && validatableInput.value.length <= validatableInput.maxLength
     }
     if (validatableInput.min != null && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value > validatableInput.min
+        isValid = isValid && validatableInput.value >= validatableInput.min
     }
     if (validatableInput.max != null && typeof validatableInput.value === 'number') {
         isValid = isValid && validatableInput.value <= validatableInput.max
@@ -144,6 +144,39 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> { //Objet
     abstract renderContent():void
 }
 
+//PROJECT ITEM CLASS
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{ //EQUIVALEN AL HOSTED Y AL ELEMENT ESPECIFICOS
+    private project: Project
+
+    get persons() {
+        if (this.project.people === 1) {
+            return '1 person'
+        } else {
+            return `${this.project.people} persons`
+        }
+    }
+
+    constructor(hostId: string, project: Project) {
+        super('single-project', hostId, false, project.id)
+        this.project = project
+
+        this.renderContent()
+    }
+
+    configure(){
+
+    }
+
+    renderContent(){
+        this.element.querySelector('h2')!.textContent = this.project.title
+        this.element.querySelector('h3')!.textContent = this.persons + ' assigned'
+        this.element.querySelector('p')!.textContent = this.project.description
+    }
+
+}
+
+
+
 // PROJECT LIST CLASS
 class ProjectList extends Component <HTMLDivElement, HTMLElement> {
     assignedProjects: Project[]
@@ -183,11 +216,7 @@ class ProjectList extends Component <HTMLDivElement, HTMLElement> {
         const listElement = document.getElementById(`${this.type}-projects-lists`)! as HTMLUListElement
         listElement.innerHTML = ''
         for (const projectItem of this.assignedProjects) {
-            const listItem = document.createElement('li')
-            listItem.textContent = projectItem.title
-            // listItem.textContent = projectItem.description
-            // listItem.textContent = projectItem.people.toString()
-            listElement.appendChild(listItem)
+            new ProjectItem(this.element.querySelector('ul')!.id, projectItem)
         }
     }
 

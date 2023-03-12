@@ -117,11 +117,11 @@ button:active {
 }
 
 #finished-projects li h2 {
-  color: #0044ff;
+  color: #3a3a3a;
 }
 
 .projects li h3 {
-  color: #575757;
+  color: white;
   font-size: 1rem;
 }
 
