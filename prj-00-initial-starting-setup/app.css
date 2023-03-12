@@ -104,7 +104,9 @@ button:active {
 }
 
 .projects li {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
+  background-color: #3a3a3a;
+  box-shadow: 3px 3px 8px #2d2d2d;
+  border-radius: 5px;
   padding: 1rem;
   margin: 1rem;
 }
