@@ -10,7 +10,6 @@ interface DragTarget {
     dragLeaveHandle(event: DragEvent): void
 }
 
-
 // Project Type
 enum ProjectStatus{Active, Finisihed}
 
@@ -32,9 +31,7 @@ class State<T>{
     protected listeners: Listener<T>[] = [] //Array de funciónes que se activan ante un cambio en projects
     addListener(listenerFn: Listener<T>) {
     this.listeners.push(listenerFn)
-
     }
-
 }
 
 class ProjectState extends State<Project> {
@@ -52,8 +49,6 @@ class ProjectState extends State<Project> {
         this.instance = new ProjectState()
         return this.instance
     }
-
-
 
     addProjects(title: string, description: string, numberOfPeople: number) {
         const newProject = new Project(
@@ -81,12 +76,9 @@ class ProjectState extends State<Project> {
             listenerFn(this.projects.slice())
         }
     }
-
 }
 
 const projectState = ProjectState.getInstance()
-
-
 
 //Validation
 interface Validatable {
@@ -213,8 +205,6 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 
 }
 
-
-
 // PROJECT LIST CLASS
 class ProjectList extends Component <HTMLDivElement, HTMLElement> implements DragTarget{
     assignedProjects: Project[]
@@ -285,7 +275,6 @@ class ProjectList extends Component <HTMLDivElement, HTMLElement> implements Dra
             new ProjectItem(this.element.querySelector('ul')!.id, projectItem)
         }
     }
-
 }
 
 //PROJECT INPUT CLASS
@@ -294,7 +283,6 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
     titleInputElement: HTMLInputElement
     descriptionInputElement: HTMLInputElement
     peopleInputElement: HTMLInputElement
-
 
     constructor() {
         super('project-input', 'app', true, 'user-input')
@@ -312,14 +300,11 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
 
     renderContent(): void {}
 
-
-
     private clearInputs() {
         this.titleInputElement.value = ''
         this.descriptionInputElement.value = ''
         this.peopleInputElement.value = ''
     }
-
 
     private gatherUserInput(): [string, string, number] | void {
         const enteredTitle = this.titleInputElement.value
