@@ -1,3 +1,44 @@
+//Project State Management
+
+class ProjectState {
+    private listeners: any[] = [] //Array de funciónes que se activan ante un cambio en projects
+    private projects: any[] = []
+    private static instance: ProjectState
+
+    private constructor() { }
+
+    static getInstance() {
+        if (this.instance) {
+            return this.instance
+        }
+        this.instance = new ProjectState()
+        return this.instance
+    }
+
+    addListener(listenerFn: Function) {
+        this.listeners.push(listenerFn)
+
+    }
+
+    addProjects(title: string, description: string, numberOfPeople: number) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: title,
+            description: description,
+            people: numberOfPeople
+        }
+        this.projects.push(newProject)
+
+        for (const listenerFn of this.listeners) {
+            listenerFn(this.projects.slice())
+        }
+    }
+}
+
+const projectState = ProjectState.getInstance()
+
+
+
 //Validation
 interface Validatable {
     value: string | number
@@ -53,23 +94,43 @@ class ProjectList {
     templateElement: HTMLTemplateElement
     hostedElement: HTMLDivElement
     element: HTMLElement //Section class projects
+    assignedProjects: any[]
 
     constructor(private type: 'active' | 'finished') {
         this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement
         this.hostedElement = document.getElementById('app')! as HTMLDivElement
+        this.assignedProjects = [] //Lo asigno al constructor vació porque se ejecuta con interacción.
 
         const importedNode = document.importNode(this.templateElement.content, true)
         this.element = importedNode.firstElementChild as HTMLElement
         this.element.id = `${this.type}-projects`
+
+        projectState.addListener((projects: any[]) => {
+            this.assignedProjects = projects
+            this.renderProjects()
+        })
+
         this.attach()
         this.renderContent() //Llamamos al metodo de render despues de introducir el DOM
+    }
+
+    private renderProjects() {
+        const listElement = document.getElementById(`${this.type}-projects-lists`)! as HTMLUListElement
+
+        for (const projectItem of this.assignedProjects) {
+            const listItem = document.createElement('li')
+            listItem.textContent = projectItem.title
+            // listItem.textContent = projectItem.description
+            // listItem.textContent = projectItem.people
+            listElement.appendChild(listItem)
+        }
     }
 
     private renderContent() {
         const listId = `${this.type}-projects-lists`
 
-        this.element.querySelector('ul')!.id = listId
         this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS'
+        this.element.querySelector('ul')!.id = listId
 
     }
 
@@ -157,7 +218,7 @@ class ProjectInput {
         this.clearInputs()
         if (Array.isArray(userInput)) { //Metodo para confirmar que es un typeof[]
             const [title, description, people] = userInput
-            console.log(title, description, people)
+            projectState.addProjects(title, description, people)
         }
     }
 
