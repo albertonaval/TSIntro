@@ -117,7 +117,7 @@ button:active {
 }
 
 #finished-projects li h2 {
-  color: #3a3a3a;
+  color: black;
 }
 
 .projects li h3 {
@@ -134,7 +134,9 @@ button:active {
 }
 
 #finished-projects .droppable {
-  background: #1a1a1ac6;
+  background-color: 2d2d2d;
+  box-shadow: 3px 3px 8px black;
+  color: white;
 }
 
 #user-input {

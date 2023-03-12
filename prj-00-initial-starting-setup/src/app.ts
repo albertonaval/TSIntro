@@ -1,3 +1,4 @@
+
 //DRAG AND DROP INTERFACES
 interface Draggable {
     dragStartHandler(event: DragEvent): void
@@ -11,7 +12,7 @@ interface DragTarget {
 }
 
 // Project Type
-enum ProjectStatus{Active, Finisihed}
+enum ProjectStatus{Active, Finished}
 
 class Project {
 
@@ -59,7 +60,6 @@ class ProjectState extends State<Project> {
             ProjectStatus.Active
         )
         this.projects.push(newProject)
-
         this.updateListeners()
     }
 
@@ -163,7 +163,8 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> { //Objet
 }
 
 //PROJECT ITEM CLASS
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable{ //EQUIVALEN AL HOSTED Y AL ELEMENT ESPECIFICOS
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
+    implements Draggable{ //EQUIVALEN AL HOSTED Y AL ELEMENT ESPECIFICOS
     private project: Project
 
     get persons() {
@@ -184,8 +185,8 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 
     @Autobind
     dragStartHandler(event: DragEvent) {
-        event.dataTransfer!.setData('text/plain', this.project.id)
-        event.dataTransfer!.effectAllowed = 'move'
+        event.dataTransfer!.setData('text/plain', this.project.id);
+        event.dataTransfer!.effectAllowed = 'move';
     }
 
     dragEndhandler(_event: DragEvent) {
@@ -206,7 +207,8 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 }
 
 // PROJECT LIST CLASS
-class ProjectList extends Component <HTMLDivElement, HTMLElement> implements DragTarget{
+class ProjectList extends Component<HTMLDivElement, HTMLElement>
+    implements DragTarget{
     assignedProjects: Project[]
 
     constructor(private type: 'active' | 'finished') {
@@ -220,12 +222,19 @@ class ProjectList extends Component <HTMLDivElement, HTMLElement> implements Dra
     @Autobind
     dragOverHandler(event: DragEvent) {
         if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
-            event.preventDefault() //Para que funcione el drop hay que poner e.preventDefault ya js no permite el drop default
+        event.preventDefault() //Para que funcione el drop hay que poner e.preventDefault ya js no permite el drop default
         const listElement = this.element.querySelector('ul')!
         listElement.classList.add('droppable')
-
         }
+    }
 
+    @Autobind
+    dropHandler(event: DragEvent) {
+        const prjId = event.dataTransfer!.getData('text/plain');
+        projectState.moveProject(
+        prjId,
+        this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished
+        );
     }
 
     @Autobind
@@ -234,13 +243,6 @@ class ProjectList extends Component <HTMLDivElement, HTMLElement> implements Dra
         listElement.classList.remove('droppable')
     }
 
-    @Autobind
-    dropHandler(event: DragEvent) {
-        const prjId = event.dataTransfer!.getData('text/plain')
-        projectState.moveProject(prjId,
-            this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finisihed)
-        //console.log(event.dataTransfer!.getData('text/plain'))
-    }
 
     configure() {
         this.element.addEventListener('dragover', this.dragOverHandler)
@@ -252,7 +254,7 @@ class ProjectList extends Component <HTMLDivElement, HTMLElement> implements Dra
                 if (this.type === 'active') {
                     return prj.status === ProjectStatus.Active
                 }
-                return prj.status === ProjectStatus.Finisihed
+                return prj.status === ProjectStatus.Finished
             })
 
             this.assignedProjects = filteredProjects
