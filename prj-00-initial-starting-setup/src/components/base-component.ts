@@ -1,6 +1,7 @@
+//Export default indica que de este archivo por defecto se exporta este unico componente.
 
-    // Component Base Class
-    export abstract class Component<T extends HTMLElement, U extends HTMLElement> { //Objetivo: Elegir los Element HTML no se puede instanciar siempre
+// Component Base Class
+    export default abstract class Component<T extends HTMLElement, U extends HTMLElement> { //Objetivo: Elegir los Element HTML no se puede instanciar siempre
     templateElement: HTMLTemplateElement;
     hostElement: T;
     element: U;

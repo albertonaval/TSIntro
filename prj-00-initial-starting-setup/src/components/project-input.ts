@@ -1,7 +1,7 @@
-import { Component } from "./base-component.js";
-import { Validatable } from "../utils/validation.js";
-import { autobind } from "../decorators/autobind.js";
-import { validate } from "../utils/validation.js";
+import  Component  from "./base-component.js"; //Al exportar en base component el component por defecto puedo quitar {}
+import * as Validation from '../utils/validation.js' //Indica que importe todo de ese archivo a modo object Validation. ...
+//import { Validatable, validate } from "../utils/validation.js";
+import { autobind as Autobind } from "../decorators/autobind.js"; //Cambiar el nombre de la importación similar to REACT
 import { projectState } from "../state/project-state.js";
 
 
@@ -37,16 +37,16 @@ import { projectState } from "../state/project-state.js";
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
-        const titleValidatable: Validatable = {
+        const titleValidatable: Validation.Validatable = {
         value: enteredTitle,
         required: true
         };
-        const descriptionValidatable: Validatable = {
+        const descriptionValidatable: Validation.Validatable = {
         value: enteredDescription,
         required: true,
         minLength: 5
         };
-        const peopleValidatable: Validatable = {
+        const peopleValidatable: Validation.Validatable = {
         value: +enteredPeople,
         required: true,
         min: 1,
@@ -54,9 +54,9 @@ import { projectState } from "../state/project-state.js";
         };
 
         if (
-        !validate(titleValidatable) ||
-        !validate(descriptionValidatable) ||
-        !validate(peopleValidatable)
+        !Validation.validate(titleValidatable) ||
+        !Validation.validate(descriptionValidatable) ||
+        !Validation.validate(peopleValidatable)
         ) {
         alert('Invalid input, please try again!'); //! indica si al menos una es falsa y lanza la alerta
         return;
@@ -71,7 +71,7 @@ import { projectState } from "../state/project-state.js";
         this.peopleInputElement.value = '';
     }
 
-    @autobind
+    @Autobind
     private submitHandler(event: Event) {
         event.preventDefault();
         const userInput = this.gatherUserInput();

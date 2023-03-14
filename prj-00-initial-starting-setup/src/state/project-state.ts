@@ -57,5 +57,9 @@ import { Project, ProjectStatus } from "../models/project.js";
     }
     }
 
-    export const projectState = ProjectState.getInstance();
+
+//console.log('RUNNING.....') ==> COMPROBACIÖN
+export const projectState = ProjectState.getInstance();
+
+//Esta exportación se hace varias veces, pero solo se ejecuta la primera vez.
 
