@@ -1,0 +1,26 @@
+html{
+    font-family: sans-serif;
+    background-color: black;
+    color: whitesmoke;
+}
+
+#map {
+    width: 90%;
+    height: 40rem;
+    border: 1px solid whitesmoke;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+form{
+    text-align: center;
+    margin: 2rem auto;
+}
