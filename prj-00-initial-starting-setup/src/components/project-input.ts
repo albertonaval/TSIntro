@@ -1,8 +1,8 @@
-import  Component  from "./base-component.js"; //Al exportar en base component el component por defecto puedo quitar {}
-import * as Validation from '../utils/validation.js' //Indica que importe todo de ese archivo a modo object Validation. ...
+import  Component  from "./base-component"; //Al exportar en base component el component por defecto puedo quitar {}
+import * as Validation from '../utils/validation' //Indica que importe todo de ese archivo a modo object Validation. ...
 //import { Validatable, validate } from "../utils/validation.js";
-import { autobind as Autobind } from "../decorators/autobind.js"; //Cambiar el nombre de la importación similar to REACT
-import { projectState } from "../state/project-state.js";
+import { autobind as Autobind } from "../decorators/autobind"; //Cambiar el nombre de la importación similar to REACT
+import { projectState } from "../state/project-state";
 
 
 
