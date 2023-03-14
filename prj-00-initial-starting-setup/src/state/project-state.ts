@@ -1,5 +1,7 @@
+import { Project, ProjectStatus } from "../models/project.js";
 
-    namespace App {
+
+
         // Project State Management
     type Listener<T> = (items: T[]) => void; //Establezco el genérico y en la clase que extiendo el especifico
 
@@ -57,4 +59,3 @@
 
     export const projectState = ProjectState.getInstance();
 
-}

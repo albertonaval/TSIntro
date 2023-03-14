@@ -1,4 +1,4 @@
-namespace App {
+
     // Component Base Class
     export abstract class Component<T extends HTMLElement, U extends HTMLElement> { //Objetivo: Elegir los Element HTML no se puede instanciar siempre
     templateElement: HTMLTemplateElement;
@@ -38,4 +38,3 @@ namespace App {
     abstract configure(): void; //Queremos instanciar esta clase y forzar a que tenga estos metodos.
     abstract renderContent(): void;
     }
-}
