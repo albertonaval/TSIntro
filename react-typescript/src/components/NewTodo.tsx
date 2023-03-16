@@ -17,7 +17,7 @@ let textInputRef = useRef<HTMLInputElement>(null) //Se añade null porque caundo
     }
     return (
         <form onSubmit={todoSubmitHandler}>
-            <div>
+            <div className="form-control">
                 <label htmlFor="todo-text">TODO TEXT</label>
                 <input type="text" id="todo-text" ref={ textInputRef} />
             </div>
